@@ -19,6 +19,11 @@ var CosmonautsComponent = (function () {
         this.cosmonautService.getCosmonauts()
             .then(function (data) { return _this.cosmonauts = data; });
     };
+    CosmonautsComponent.prototype.deleteCosmonaut = function (cosmonaut) {
+        var _this = this;
+        this.cosmonautService.deleteCosmonaut(cosmonaut.id)
+            .then(function () { return _this.cosmonauts = _this.cosmonauts.filter(function (cn) { return cn !== cosmonaut; }); });
+    };
     return CosmonautsComponent;
 }());
 CosmonautsComponent = __decorate([

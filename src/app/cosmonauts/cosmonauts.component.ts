@@ -16,4 +16,9 @@ export class CosmonautsComponent implements OnInit {
         this.cosmonautService.getCosmonauts()
             .then(data => this.cosmonauts = data);
     }
+
+    deleteCosmonaut(cosmonaut:Cosmonaut): void {
+        this.cosmonautService.deleteCosmonaut(cosmonaut.id)
+            .then(() => this.cosmonauts = this.cosmonauts.filter(cn => cn !== cosmonaut));
+    }
 }

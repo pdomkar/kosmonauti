@@ -1,7 +1,9 @@
 export class Cosmonaut {
-    id: number;
-    name: string;
-    surname: string;
-    born: Date;
-    power: string;
+    constructor(
+    public id: number,
+    public name: string,
+    public surname: string,
+    public born: string,
+    public power: string
+){}
 }
