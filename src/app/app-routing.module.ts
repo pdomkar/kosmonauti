@@ -1,7 +1,7 @@
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CosmonautsComponent }      from './cosmonauts.component';
+import { CosmonautsComponent }      from './cosmonauts/cosmonauts.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/cosmonauts', pathMatch: 'full' },
