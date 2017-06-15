@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Cosmonaut } from './cosmonaut';
+import { Cosmonaut } from './../cosmonaut';
 import { CosmonautService } from './../services/cosmonaut.service'
 
 @Component({
