@@ -13,9 +13,11 @@ import { FormsModule }   from '@angular/forms';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './services/in-memory-data.service';
 
+import { MyDatePickerModule } from 'mydatepicker';
+
 
 @NgModule({
-  imports:      [ BrowserModule, AppRoutingModule, HttpModule, InMemoryWebApiModule.forRoot(InMemoryDataService), FormsModule ],
+  imports:      [ BrowserModule, AppRoutingModule, HttpModule, InMemoryWebApiModule.forRoot(InMemoryDataService), FormsModule, MyDatePickerModule],
   declarations: [ AppComponent, CosmonautsComponent, CosmonautAddComponent, CosmonautEditComponent, CosmonautAddEditFormComponent ],
   bootstrap:    [ AppComponent ],
   providers: [ CosmonautService ]

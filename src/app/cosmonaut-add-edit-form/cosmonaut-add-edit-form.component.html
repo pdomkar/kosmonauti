@@ -1,4 +1,31 @@
 <form (ngSubmit)="onSubmit()" #cosmonautForm="ngForm">
+
+    <!--<md-input-container>-->
+        <!--<input mdInput placeholder="Jméno" required-->
+               <!--[(ngModel)]="model.name" name="name" #name="ngModel">-->
+    <!--</md-input-container>-->
+    <!--<br>-->
+    <!--<md-input-container>-->
+        <!--<input mdInput placeholder="Příjmení" required-->
+               <!--[(ngModel)]="model.surname" name="surname" #surname="ngModel">-->
+    <!--</md-input-container>-->
+    <!--<br>-->
+    <!--&lt;!&ndash;<md-input-container>&ndash;&gt;-->
+        <!--&lt;!&ndash;<input mdInput [mdDatepicker]="myDatepicker" [(ngModel)]="model.born" required name="born" #born="ngModel" placeholder="Narozen">&ndash;&gt;-->
+        <!--&lt;!&ndash;<button mdSuffix [mdDatepickerToggle]="myDatepicker"></button>&ndash;&gt;-->
+        <!--&lt;!&ndash;<md-error></md-error>&ndash;&gt;-->
+    <!--&lt;!&ndash;</md-input-container>&ndash;&gt;-->
+    <!--<my-date-picker [options]="myDatePickerOptions"-->
+                    <!--[(ngModel)]="model.born" required name="born" #born="ngModel"></my-date-picker>-->
+    <!--<br>-->
+    <!--<md-datepicker #myDatepicker></md-datepicker>-->
+    <!--<br>-->
+    <!--<md-input-container>-->
+        <!--<input mdInput placeholder="Superschopnost" required-->
+               <!--[(ngModel)]="model.power" name="power" #power="ngModel">-->
+    <!--</md-input-container>-->
+
+
     <div class="form-group">
         <label for="name">Jméno</label>
         <input type="text" class="form-control" id="name"
@@ -20,9 +47,13 @@
     </div>
     <div class="form-group">
         <label for="born">Narozen</label>
-        <input type="text" class="form-control" id="born"
-               required
-               [(ngModel)]="model.born" name="born" #born="ngModel">
+        <!--<input type="text"  class="form-control" id="born"-->
+               <!--required-->
+               <!--[(ngModel)]="model.born" name="born" #born="ngModel">-->
+
+         <!-- -->
+        <my-date-picker [options]="myDatePickerOptions"
+                        [(ngModel)]="model.born" required name="born" #born="ngModel"></my-date-picker>
         <div *ngIf="formErrors.born" class="alert alert-danger">
             {{ formErrors.born }}
         </div>
@@ -37,6 +68,9 @@
         </div>
     </div>
     <div class="form-group text-right">
+        <!--<button md-raised-button type="reset" *ngIf="!isEdited()" (click)="reset(); cosmonautForm.reset()">Vymazat data</button>-->
+        <!--<button md-raised-button type="button" *ngIf="isEdited()" (click)="setDefault();">Nastavit původní</button>-->
+        <!--<button md-raised-button type="submit" [disabled]="!cosmonautForm.form.valid">{{action}}</button>-->
         <button type="reset" *ngIf="!isEdited()" (click)="reset(); cosmonautForm.reset()" class="btn btn-warning">Vymazat data</button>
         <button type="button" *ngIf="isEdited()" (click)="setDefault();" class="btn btn-warning">Nastavit původní</button>
         <button type="submit" [disabled]="!cosmonautForm.form.valid" class="btn btn-success">{{action}}</button>

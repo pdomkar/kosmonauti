@@ -13,7 +13,7 @@
     <tr *ngFor="let cosmonaut of cosmonauts">
         <td>{{cosmonaut.name}}</td>
         <td>{{cosmonaut.surname}}</td>
-        <td>{{cosmonaut.born}}</td>
+        <td>{{cosmonaut.born.date.day}}. {{cosmonaut.born.date.month}}. {{cosmonaut.born.date.year}}</td>
         <td>{{cosmonaut.power}}</td>
         <td>
             <a [routerLink]="['/edit', cosmonaut.id]" class="btn btn-primary">

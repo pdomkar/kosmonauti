@@ -1,7 +1,9 @@
-import { Component, Input, OnChanges, AfterViewChecked, ViewChild, NgForm} from '@angular/core';
+import { Component, Input, OnChanges, AfterViewChecked, ViewChild} from '@angular/core';
 import { Cosmonaut } from './../cosmonaut';
+import { NgForm } from '@angular/forms';
 import { CosmonautService } from './../services/cosmonaut.service'
 import { Router } from '@angular/router';
+import {IMyDpOptions} from 'mydatepicker';
 
 @Component({
     selector: 'pd-cosmonaut-add-edit-form',
@@ -12,9 +14,11 @@ export class CosmonautAddEditFormComponent implements OnChanges, AfterViewChecke
     @Input() editedCosmonaut: Cosmonaut;
     cosmonautForm: NgForm;
     @ViewChild('cosmonautForm') currentForm: NgForm;
-    model: Cosmonaut = new Cosmonaut(null, '', '', '', '');
+    model: Cosmonaut = new Cosmonaut(null, '', '', {date:{year:0,month: 0, day:0}}, '');
     action: string = 'Vytvořit';
-
+    private myDatePickerOptions: IMyDpOptions = {
+        dateFormat: 'dd.mm.yyyy',
+    };
     constructor(private router: Router, private cosmonautService: CosmonautService) {}
 
 
@@ -83,7 +87,7 @@ export class CosmonautAddEditFormComponent implements OnChanges, AfterViewChecke
     };
 
     reset():void {
-        this.model = new Cosmonaut(null, '', '', '', '');
+        this.model = new Cosmonaut(null, '', '',{date:{year:0,month: 0, day:0}}, '');
     }
     setDefault():void {
         if(this.isEdited()) {
