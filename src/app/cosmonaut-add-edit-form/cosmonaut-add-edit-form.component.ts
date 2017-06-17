@@ -73,16 +73,26 @@ export class CosmonautAddEditFormComponent implements OnChanges, AfterViewChecke
     };
 
 
-
+    /**
+     * Reset data in add form
+     */
     reset():void {
         this.model = new Cosmonaut(null, '', '',null, '');
     }
+
+    /**
+     * Set default data in edit form
+     */
     setDefault():void {
         if(this.isEdited()) {
             this.model = Object.assign({}, this.editedCosmonaut);
         }
     }
 
+    /**
+     * Return true if page is  for editing of cosmonaut
+     * @returns {boolean}
+     */
     isEdited(): boolean {
         return this.editedCosmonaut !== undefined && this.editedCosmonaut !== null;
     }
@@ -97,6 +107,9 @@ export class CosmonautAddEditFormComponent implements OnChanges, AfterViewChecke
         }
     }
 
+    /**
+     * Navigate to previous page
+     */
     goBack(): void {
         this.location.back();
     }

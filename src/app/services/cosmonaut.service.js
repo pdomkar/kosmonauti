@@ -62,17 +62,44 @@ var CosmonautService = (function () {
     };
     /**
      * Return Array of limit cosmonauts from offset in Promise
+     * @param attributeOrder String represent name of attributes of cosmonaut
+     * @param typeOrder value for type of ordering: ASC or DESC
      * @param offset
      * @param limit
      * @returns Promise<Cosmonaut[]>
      */
-    CosmonautService.prototype.getCosmonautsOrderLimit = function (offset, limit) {
+    CosmonautService.prototype.getCosmonautsOrderLimit = function (attributeOrder, typeOrder, offset, limit) {
+        var _this = this;
         return this.http.get(this.url)
             .toPromise()
             .then(function (response) {
-            return response.json().data.slice(offset, offset + limit);
+            var data = response.json().data;
+            if (data.length > 0 && typeof (data[0][attributeOrder]) === 'string') {
+                var sortedData = _this.stringOrder(data, attributeOrder, typeOrder);
+            }
+            return sortedData.slice(offset, offset + limit);
         })
             .catch(this.handleError);
+    };
+    /**
+     * Sorting array by String value
+     * @param data array
+     * @param attribute String represent name of attributes of cosmonaut
+     * @param type string ASC or DESC
+     * @returns {string}
+     */
+    CosmonautService.prototype.stringOrder = function (data, attribute, type) {
+        data.sort(function (a, b) {
+            var x = a[attribute].toLowerCase();
+            var y = b[attribute].toLowerCase();
+            if (type.toUpperCase() == 'ASC') {
+                return x < y ? -1 : x > y ? 1 : 0;
+            }
+            else {
+                return x < y ? 1 : x > y ? -1 : 0;
+            }
+        });
+        return data;
     };
     /**
      * Return Cosmonaut depending on parametr id

@@ -4,13 +4,13 @@
 <a routerLink="/add" class="btn btn-success pull-right" style="margin-top: 30px;">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Vytvořit kosmonauta
 </a>
-<table class="table table-bordered table-hover">
+<table class="table table-bordered table-hover cosmonauts">
     <thead>
     <tr>
-        <th>Jméno</th>
-        <th>Příjmení</th>
+        <th (click)="setOrder('name')" class="order">Jméno<span *ngIf="orderName == 'name'" [ngClass]="{'asc': orderType === 'ASC', 'desc': orderType === 'DESC', 'pull-right': true}"></span></th>
+        <th (click)="setOrder('surname')" class="order">Příjmení<span *ngIf="orderName == 'surname'" [ngClass]="{'asc': orderType === 'ASC', 'desc': orderType === 'DESC', 'pull-right': true}"></span></th>
         <th>Datum narození</th>
-        <th>Superschopnost</th>
+        <th (click)="setOrder('power')" class="order">Superschopnost<span *ngIf="orderName == 'power'" [ngClass]="{'asc': orderType === 'ASC', 'desc': orderType === 'DESC', 'pull-right': true}"></span></th>
         <th class="text-right">#</th>
     </tr>
     </thead>

@@ -4,7 +4,8 @@ import { CosmonautService } from './../services/cosmonaut.service'
 
 @Component({
     selector: 'pd-cosmonauts',
-    templateUrl: './cosmonauts.component.html'
+    templateUrl: './cosmonauts.component.html',
+    styleUrls: ['./cosmonauts.component.css'],
 })
 
 export class CosmonautsComponent implements OnInit {
@@ -12,6 +13,8 @@ export class CosmonautsComponent implements OnInit {
     totalItems: number = 0;
     itemPerPage: number = 10;
     currentPage: number = 1;
+    orderName: string = 'name';
+    orderType: string = 'ASC';
 
     constructor(private cosmonautService: CosmonautService) {  }
 
@@ -25,7 +28,7 @@ export class CosmonautsComponent implements OnInit {
      * Load apropriate cosmonauts by setted page
      */
     loadCosmonauts(): void {
-        this.cosmonautService.getCosmonautsOrderLimit((this.currentPage-1)*this.itemPerPage, this.itemPerPage)
+        this.cosmonautService.getCosmonautsOrderLimit(this.orderName, this.orderType, (this.currentPage-1)*this.itemPerPage, this.itemPerPage)
             .then(data => {
                 this.cosmonauts = data;
             });
@@ -53,6 +56,24 @@ export class CosmonautsComponent implements OnInit {
      */
     setPage(page: number): void {
         this.currentPage = page;
+        this.loadCosmonauts();
+    }
+
+    /**
+     * Set sort attribute. If was set same attribute change type of order.
+     * @param attribute by which we wil sort
+     */
+    setOrder(attribute: string) {
+        if(this.orderName === attribute) {
+            if(this.orderType === 'ASC') {
+                this.orderType = 'DESC';
+            } else {
+                this.orderType = 'ASC';
+            }
+        } else {
+            this.orderName = attribute;
+            this.orderType = 'ASC';
+        }
         this.loadCosmonauts();
     }
 }

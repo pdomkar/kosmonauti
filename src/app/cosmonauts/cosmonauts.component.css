@@ -1,0 +1,12 @@
+table.cosmonauts thead th.order {
+  cursor: pointer;
+}
+table.cosmonauts thead th span.asc:after {
+  margin-left: 5px;
+  content: '\2193';
+}
+table.cosmonauts thead th span.desc:after {
+  margin-left: 5px;
+  content: '\2191';
+}
+

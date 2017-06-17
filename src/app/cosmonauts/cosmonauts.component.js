@@ -16,6 +16,8 @@ var CosmonautsComponent = (function () {
         this.totalItems = 0;
         this.itemPerPage = 10;
         this.currentPage = 1;
+        this.orderName = 'name';
+        this.orderType = 'ASC';
     }
     CosmonautsComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -28,7 +30,7 @@ var CosmonautsComponent = (function () {
      */
     CosmonautsComponent.prototype.loadCosmonauts = function () {
         var _this = this;
-        this.cosmonautService.getCosmonautsOrderLimit((this.currentPage - 1) * this.itemPerPage, this.itemPerPage)
+        this.cosmonautService.getCosmonautsOrderLimit(this.orderName, this.orderType, (this.currentPage - 1) * this.itemPerPage, this.itemPerPage)
             .then(function (data) {
             _this.cosmonauts = data;
         });
@@ -56,12 +58,32 @@ var CosmonautsComponent = (function () {
         this.currentPage = page;
         this.loadCosmonauts();
     };
+    /**
+     * Set sort attribute. If was set same attribute change type of order.
+     * @param attribute by which we wil sort
+     */
+    CosmonautsComponent.prototype.setOrder = function (attribute) {
+        if (this.orderName === attribute) {
+            if (this.orderType === 'ASC') {
+                this.orderType = 'DESC';
+            }
+            else {
+                this.orderType = 'ASC';
+            }
+        }
+        else {
+            this.orderName = attribute;
+            this.orderType = 'ASC';
+        }
+        this.loadCosmonauts();
+    };
     return CosmonautsComponent;
 }());
 CosmonautsComponent = __decorate([
     core_1.Component({
         selector: 'pd-cosmonauts',
-        templateUrl: './cosmonauts.component.html'
+        templateUrl: './cosmonauts.component.html',
+        styleUrls: ['./cosmonauts.component.css'],
     }),
     __metadata("design:paramtypes", [cosmonaut_service_1.CosmonautService])
 ], CosmonautsComponent);
