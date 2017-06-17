@@ -1,2 +1,13 @@
-<h1>{{title}}</h1>
-<router-outlet></router-outlet>
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <h1>Techfides - úkol</h1>
+        </div>
+            <ul class="nav navbar-nav pull-right">
+                <li><a routerLink="/cosmonauts" routerLinkActive="active-link"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> Výpis kosmonautů</a></li>
+            </ul>
+       </div>
+</nav>
+<div class="container">
+    <router-outlet></router-outlet>
+</div>

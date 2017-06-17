@@ -1,0 +1,18 @@
+<ul *ngIf="paginator.totalPages > 1" class="pagination">
+    <li [ngClass]="{disabled:paginator.currentPage === 1}">
+        <a *ngIf="paginator.currentPage !== 1" (click)="setPage(1)">První</a>
+        <span *ngIf="paginator.currentPage === 1">Předchozí</span>
+    </li>
+    <li [ngClass]="{disabled:paginator.currentPage === 1}">
+        <a *ngIf="paginator.currentPage !== 1" (click)="setPage(paginator.currentPage - 1)">Předchozí</a>
+        <span *ngIf="paginator.currentPage === 1">Předchozí</span>
+    </li>
+    <li [ngClass]="{disabled:paginator.currentPage === paginator.totalPages}">
+        <a *ngIf="paginator.currentPage !== paginator.totalPages" (click)="setPage(paginator.currentPage + 1)">Další</a>
+        <span *ngIf="paginator.currentPage === paginator.totalPages">Další</span>
+    </li>
+    <li [ngClass]="{disabled:paginator.currentPage === paginator.totalPages}">
+        <a *ngIf="paginator.currentPage !== paginator.totalPages" (click)="setPage(paginator.totalPages)">Poslední</a>
+        <span *ngIf="paginator.currentPage === paginator.totalPages">Poslední</span>
+    </li>
+</ul>

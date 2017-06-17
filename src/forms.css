@@ -1,7 +1,20 @@
-.ng-valid[required], .ng-valid.required  {
+.ng-valid[required]:not(.my-date-picker), .ng-valid.required:not(.my-date-picker), .ng-valid[required] div div input, .ng-valid.required div div input   {
   border: 1px solid #42A948; /* green */
 }
 
-.ng-invalid:not(form)  {
+.ng-invalid:not(form):not(.my-date-picker), .ng-invalid:not(form) div div input  {
   border: 1px solid #a94442; /* red */
+}
+
+.my-date-picker{
+  border: none
+}
+.my-date-picker.ng-invalid >div >div> input {
+  border: 1px solid #a94442; /* red */
+}
+
+div.selbtngroup{
+  height:32px !important;
+  top: 1px;
+  right: 1px;
 }

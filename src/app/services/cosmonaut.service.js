@@ -17,30 +17,68 @@ var CosmonautService = (function () {
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         this.url = 'api/cosmonauts';
     }
+    /**
+     * Create new entry in memory with Cosmponaut pass as argument and return him
+     * @param cosmonaut
+     * @returns Promise<Cosmonaut>
+     */
     CosmonautService.prototype.createCosmonaut = function (cosmonaut) {
         return this.http.post(this.url, cosmonaut, { headers: this.headers })
             .toPromise()
             .then(function (result) { return result.json().data; })
             .catch(this.handleError);
     };
+    /**
+     * Update Cosmonaut pass as argument on base his id and return updated Cosmonaut
+     * @param cosmonaut updated Cosmonaut
+     * @returns Promise<Cosmonaut>
+     */
     CosmonautService.prototype.updateCosmonaut = function (cosmonaut) {
         return this.http.put(this.url + '/' + cosmonaut.id, cosmonaut, { headers: this.headers })
             .toPromise()
             .then(function () { return cosmonaut; })
             .catch(this.handleError);
     };
+    /**
+     * Delete cosmonaut with id from memory
+     * @param id of deleted Cosmonaut
+     * @returns {any}
+     */
     CosmonautService.prototype.deleteCosmonaut = function (id) {
         return this.http.delete(this.url + '/' + id, { headers: this.headers })
             .toPromise()
             .then(function () { return null; })
             .catch(this.handleError);
     };
+    /**
+     * Return Array of all cosmonauts from memory In Promise
+     * @returns Promise<Cosmonaut[]>
+     */
     CosmonautService.prototype.getCosmonauts = function () {
         return this.http.get(this.url)
             .toPromise()
             .then(function (response) { return response.json().data; })
             .catch(this.handleError);
     };
+    /**
+     * Return Array of limit cosmonauts from offset in Promise
+     * @param offset
+     * @param limit
+     * @returns Promise<Cosmonaut[]>
+     */
+    CosmonautService.prototype.getCosmonautsLimit = function (offset, limit) {
+        return this.http.get(this.url)
+            .toPromise()
+            .then(function (response) {
+            return response.json().data.slice(offset, offset + limit);
+        })
+            .catch(this.handleError);
+    };
+    /**
+     * Return Cosmonaut depending on parametr id
+     * @param id of search Cosmonaut
+     * @returns Promise<Cosmonaut>
+     */
     CosmonautService.prototype.getCosmonaut = function (id) {
         return this.http.get(this.url + '/' + id)
             .toPromise()

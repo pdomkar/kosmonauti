@@ -13,18 +13,36 @@ var cosmonaut_service_1 = require("./../services/cosmonaut.service");
 var CosmonautsComponent = (function () {
     function CosmonautsComponent(cosmonautService) {
         this.cosmonautService = cosmonautService;
+        this.totalItems = 0;
+        this.itemPerPage = 10;
+        this.currentPage = 1;
     }
     CosmonautsComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.cosmonautService.getCosmonauts()
-            .then(function (data) { return _this.cosmonauts = data; });
+            .then(function (data) { return _this.totalItems = data.length; });
+        this.loadCosmonauts();
+    };
+    CosmonautsComponent.prototype.loadCosmonauts = function () {
+        var _this = this;
+        this.cosmonautService.getCosmonautsLimit((this.currentPage - 1) * this.itemPerPage, this.itemPerPage)
+            .then(function (data) {
+            _this.cosmonauts = data;
+        });
     };
     CosmonautsComponent.prototype.deleteCosmonaut = function (cosmonaut) {
         var _this = this;
         if (confirm("Opravdu chcete smazat kosmonauta " + cosmonaut.name + ' ' + cosmonaut.surname + '?')) {
             this.cosmonautService.deleteCosmonaut(cosmonaut.id)
-                .then(function () { return _this.cosmonauts = _this.cosmonauts.filter(function (cn) { return cn !== cosmonaut; }); });
+                .then(function () {
+                _this.loadCosmonauts();
+                _this.totalItems--;
+            });
         }
+    };
+    CosmonautsComponent.prototype.setPage = function (page) {
+        this.currentPage = page;
+        this.loadCosmonauts();
     };
     return CosmonautsComponent;
 }());
