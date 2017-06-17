@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges Input, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { Paginator } from './paginator';
 @Component({
     selector: 'pd-paginator',
@@ -7,22 +7,19 @@ import { Paginator } from './paginator';
 })
 
 export class PaginatorComponent implements OnInit {
-    paginator:Paginator;
-    constructor() {
-    }
+    paginator: Paginator;
+
     @Input() totalItems: number;
     @Input() itemPerPage: number;
     @Output() onSetPage = new EventEmitter<number>();
 
-    ngOnChanges(): void {
-        this.paginator = new Paginator(1, 1, this.itemPerPage); //TODO NEVYTAVERE PRI KAZDE ZMENE
+    ngOnInit() {
+        this.paginator = new Paginator(1, 1, this.itemPerPage);
         this.paginator.totalPages = Math.ceil(this.totalItems / this.paginator.itemPerPage);
     }
-
 
     setPage(page:number):void {
         this.paginator.currentPage = page;
         this.onSetPage.emit(this.paginator.currentPage);
     }
-
 }

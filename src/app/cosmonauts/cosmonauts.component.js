@@ -23,13 +23,20 @@ var CosmonautsComponent = (function () {
             .then(function (data) { return _this.totalItems = data.length; });
         this.loadCosmonauts();
     };
+    /**
+     * Load apropriate cosmonauts by setted page
+     */
     CosmonautsComponent.prototype.loadCosmonauts = function () {
         var _this = this;
-        this.cosmonautService.getCosmonautsLimit((this.currentPage - 1) * this.itemPerPage, this.itemPerPage)
+        this.cosmonautService.getCosmonautsOrderLimit((this.currentPage - 1) * this.itemPerPage, this.itemPerPage)
             .then(function (data) {
             _this.cosmonauts = data;
         });
     };
+    /**
+     * Delete pass cosmonaut using cosmonautService after confirm
+     * @param cosmonaut
+     */
     CosmonautsComponent.prototype.deleteCosmonaut = function (cosmonaut) {
         var _this = this;
         if (confirm("Opravdu chcete smazat kosmonauta " + cosmonaut.name + ' ' + cosmonaut.surname + '?')) {
@@ -40,6 +47,11 @@ var CosmonautsComponent = (function () {
             });
         }
     };
+    /**
+     * Change view page and load Appropriate cosmonauts
+     * Is called as Output of paginator class
+     * @param page
+     */
     CosmonautsComponent.prototype.setPage = function (page) {
         this.currentPage = page;
         this.loadCosmonauts();

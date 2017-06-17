@@ -18,3 +18,12 @@ div.selbtngroup{
   top: 1px;
   right: 1px;
 }
+
+.my-alert-danger {
+  text-align: right;
+  float:right;
+}
+.my-alert-danger p {
+  color: #D40021;
+  font-weight: bold;
+}

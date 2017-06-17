@@ -65,7 +65,7 @@ export class CosmonautService {
      * @param limit
      * @returns Promise<Cosmonaut[]>
      */
-    getCosmonautsLimit(offset: number, limit: number): Promise<Cosmonaut[]> {
+    getCosmonautsOrderLimit(offset: number, limit: number): Promise<Cosmonaut[]> {
         return this.http.get(this.url)
             .toPromise()
             .then(response => {

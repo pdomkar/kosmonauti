@@ -3,27 +3,10 @@ import { Cosmonaut } from './../cosmonaut';
 import { NgForm } from '@angular/forms';
 import { CosmonautService } from './../services/cosmonaut.service'
 import { Router } from '@angular/router';
-import {IMyDpOptions} from 'mydatepicker';
+import { IMyDpOptions } from 'mydatepicker';
 import { Location }               from '@angular/common';
-
-    const VALIDATION_MESSAGE = {
-        'name': {
-            'required':      'Vyplňte prosím jméno.',
-            'minlength':     'Jméno by mělo mít alespoň 2 znaky.',
-            'maxlength':     'Jméno by mělo mít maximálně 20 znaky.',
-        },
-        'surname': {
-            'required':      'Vyplňte prosím příjmení.',
-            'minlength':     'Příjmení by mělo mít alespoň 2 znaky.',
-            'maxlength':     'Příjmení by mělo mít maximálně 20 znaky.',
-        },
-        'born': {
-            'required':      'Vyplňte prosím datum narození.'
-        },
-        'power': {
-            'required':      'Vyplňte prosím superschopnost.'
-        }
-    };
+import {  VALIDATION_MESSAGE } from './validation-messages';
+}
 
 @Component({
     selector: 'pd-cosmonaut-add-edit-form',
@@ -32,8 +15,8 @@ import { Location }               from '@angular/common';
 
 export class CosmonautAddEditFormComponent implements OnChanges, AfterViewChecked{
     @ViewChild('cosmonautForm') currentForm: NgForm;
-    cosmonautForm: NgForm;
     @Input() editedCosmonaut: Cosmonaut;
+    cosmonautForm: NgForm;
     model: Cosmonaut = new Cosmonaut(null, '', '', null, '');
     private action: string = 'Vytvořit';
     private myDatePickerOptions: IMyDpOptions = { dateFormat: 'dd.mm.yyyy' };

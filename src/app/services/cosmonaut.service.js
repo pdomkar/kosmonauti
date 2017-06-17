@@ -66,7 +66,7 @@ var CosmonautService = (function () {
      * @param limit
      * @returns Promise<Cosmonaut[]>
      */
-    CosmonautService.prototype.getCosmonautsLimit = function (offset, limit) {
+    CosmonautService.prototype.getCosmonautsOrderLimit = function (offset, limit) {
         return this.http.get(this.url)
             .toPromise()
             .then(function (response) {
