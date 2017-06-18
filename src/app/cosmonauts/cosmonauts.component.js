@@ -24,12 +24,8 @@ var CosmonautsComponent = (function () {
     CosmonautsComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.cosmonautService.getCosmonauts()
-            .then(function (data) {
-                return _this.totalItems = data.length;
-            })
-            .catch(function (e) {
-                return console.log(e);
-            });
+            .then(function (data) { return _this.totalItems = data.length; })
+            .catch(function (e) { return console.log(e); });
         this.loadCosmonauts();
     };
     /**
@@ -40,13 +36,11 @@ var CosmonautsComponent = (function () {
         this.cosmonautService.getCosmonautsOrderLimit(this.orderName, this.orderType, (this.currentPage - 1) * this.itemPerPage, this.itemPerPage)
             .then(function (data) {
             _this.cosmonauts = data;
-            })
-            .catch(function (e) {
-                return _this.flashMessagesService.show('Vyskytla se chyba při načítání kosmonautů. Chyba:(' + e._body.error + ')', {
-                    cssClass: 'alert-danger',
-                    timeout: 4000
-                });
-            });
+        })
+            .catch(function (e) { return _this.flashMessagesService.show('Vyskytla se chyba při načítání kosmonautů. Chyba:(' + e._body.error + ')', {
+            cssClass: 'alert-danger',
+            timeout: 4000
+        }); });
     };
     /**
      * Delete pass cosmonaut using cosmonautService after confirm
@@ -59,17 +53,12 @@ var CosmonautsComponent = (function () {
                 .then(function () {
                 _this.loadCosmonauts();
                 _this.totalItems--;
-                    _this.flashMessagesService.show('Kosmonaut byl vymazán', {
-                        cssClass: 'alert-success',
-                        timeout: 2000
-                    });
-                })
-                .catch(function (e) {
-                    return _this.flashMessagesService.show('Vyskytla se chyba při mazání kosmonauta. Chyba:(' + e._body.error + ')', {
-                        cssClass: 'alert-danger',
-                        timeout: 4000
-                    });
-                });
+                _this.flashMessagesService.show('Kosmonaut byl vymazán', { cssClass: 'alert-success', timeout: 2000 });
+            })
+                .catch(function (e) { return _this.flashMessagesService.show('Vyskytla se chyba při mazání kosmonauta. Chyba:(' + e._body.error + ')', {
+                cssClass: 'alert-danger',
+                timeout: 4000
+            }); });
         }
     };
     /**

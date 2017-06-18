@@ -74,13 +74,13 @@ var CosmonautService = (function () {
             .toPromise()
             .then(function (response) {
             var data = response.json().data;
-                if (data.length > 0 && (typeof data[0][attributeOrder]) === 'string') {
-                    data = _this.stringOrder(data, attributeOrder, typeOrder);
+            if (data.length > 0 && (typeof data[0][attributeOrder]) === 'string') {
+                data = _this.stringOrder(data, attributeOrder, typeOrder);
             }
-                else if (data.length > 0 && (typeof data[0][attributeOrder]) === 'object' && data[0][attributeOrder]['date'] !== undefined) {
-                    data = _this.dateOrder(data, attributeOrder, typeOrder);
-                }
-                return data.slice(offset, offset + limit);
+            else if (data.length > 0 && (typeof data[0][attributeOrder]) === 'object' && data[0][attributeOrder]['date'] !== undefined) {
+                data = _this.dateOrder(data, attributeOrder, typeOrder);
+            }
+            return data.slice(offset, offset + limit);
         })
             .catch(this.handleError);
     };
