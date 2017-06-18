@@ -15,9 +15,10 @@ import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './services/in-memory-data.service';
 
 import { MyDatePickerModule } from 'mydatepicker';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 
 @NgModule({
-  imports:      [ BrowserModule, AppRoutingModule, HttpModule, InMemoryWebApiModule.forRoot(InMemoryDataService), FormsModule, MyDatePickerModule],
+  imports: [BrowserModule, AppRoutingModule, HttpModule, InMemoryWebApiModule.forRoot(InMemoryDataService), FormsModule, MyDatePickerModule, FlashMessagesModule],
   declarations: [ AppComponent, CosmonautsComponent, CosmonautAddComponent, CosmonautEditComponent, CosmonautAddEditFormComponent, PaginatorComponent ],
   bootstrap:    [ AppComponent ],
   providers: [ CosmonautService ]

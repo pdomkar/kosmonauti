@@ -1,0 +1,12 @@
+h1
+{
+	color: rgb(217, 218, 220);
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 250%;
+}
+
+a.active-link, a.active-link:hover
+{
+	display: none !important;
+}
+

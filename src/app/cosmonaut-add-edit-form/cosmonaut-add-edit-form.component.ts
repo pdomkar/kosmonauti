@@ -1,19 +1,19 @@
 import { Component, Input, OnChanges, AfterViewChecked, ViewChild} from '@angular/core';
-import { Cosmonaut } from './../cosmonaut';
 import { NgForm } from '@angular/forms';
-import { CosmonautService } from './../services/cosmonaut.service'
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { IMyDpOptions } from 'mydatepicker';
-import { Location }               from '@angular/common';
-import {  VALIDATION_MESSAGE } from './validation-messages';
-}
+import { FlashMessagesService } from 'angular2-flash-messages';
+import { CosmonautService } from './../services/cosmonaut.service'
+import { Cosmonaut } from './../cosmonaut';
+import { VALIDATION_MESSAGE } from './validation-messages';
 
 @Component({
     selector: 'pd-cosmonaut-add-edit-form',
     templateUrl: './cosmonaut-add-edit-form.component.html'
 })
 
-export class CosmonautAddEditFormComponent implements OnChanges, AfterViewChecked{
+export class CosmonautAddEditFormComponent implements OnChanges, AfterViewChecked {
     @ViewChild('cosmonautForm') currentForm: NgForm;
     @Input() editedCosmonaut: Cosmonaut;
     cosmonautForm: NgForm;
@@ -24,7 +24,8 @@ export class CosmonautAddEditFormComponent implements OnChanges, AfterViewChecke
     constructor(
         private location: Location,
         private router: Router,
-        private cosmonautService: CosmonautService
+        private cosmonautService:CosmonautService,
+        private flashMessagesService:FlashMessagesService
     ) {}
 
     ngOnChanges(): void {
@@ -47,6 +48,10 @@ export class CosmonautAddEditFormComponent implements OnChanges, AfterViewChecke
         }
     }
 
+    /**
+     * Is called after each form change. Validat forms and assign validation message
+     * @param data
+     */
     onValueChanged(data?: any) {
         if (!this.cosmonautForm) { return; }
         const form = this.cosmonautForm.form;
@@ -97,13 +102,36 @@ export class CosmonautAddEditFormComponent implements OnChanges, AfterViewChecke
         return this.editedCosmonaut !== undefined && this.editedCosmonaut !== null;
     }
 
+    /**
+     * Called when form is submitted. Create or update cosmonaut and navigate to cosmonauts
+     */
     onSubmit():void {
         if(this.isEdited()) {
             this.cosmonautService.updateCosmonaut(this.model)
-                .then(() => this.router.navigate(['/cosmonauts']));
+                .then(() => {
+                    this.router.navigate(['/cosmonauts']);
+                    this.flashMessagesService.show('Kosmonaut byl upraven.', {
+                        cssClass: 'alert-success',
+                        timeout: 2000
+                    });
+                })
+                .catch(e => this.flashMessagesService.show('Vyskytla se chyba při uložení kosmonauta. Chyba:(' + e._body.error + ')', {
+                    cssClass: 'alert-danger',
+                    timeout: 4000
+                }));
         } else {
             this.cosmonautService.createCosmonaut(this.model)
-                .then(() => this.router.navigate(['/cosmonauts']));
+                .then(() => {
+                    this.router.navigate(['/cosmonauts']);
+                    this.flashMessagesService.show('Kosmonaut byl vytvořen.', {
+                        cssClass: 'alert-success',
+                        timeout: 2000
+                    });
+                })
+                .catch(e => this.flashMessagesService.show('Vyskytla se chyba při vytvoření kosmonauta. Chyba:(' + e._body.error + ')', {
+                    cssClass: 'alert-danger',
+                    timeout: 4000
+                }));
         }
     }
 

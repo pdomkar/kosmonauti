@@ -74,10 +74,13 @@ var CosmonautService = (function () {
             .toPromise()
             .then(function (response) {
             var data = response.json().data;
-            if (data.length > 0 && typeof (data[0][attributeOrder]) === 'string') {
-                var sortedData = _this.stringOrder(data, attributeOrder, typeOrder);
+                if (data.length > 0 && (typeof data[0][attributeOrder]) === 'string') {
+                    data = _this.stringOrder(data, attributeOrder, typeOrder);
             }
-            return sortedData.slice(offset, offset + limit);
+                else if (data.length > 0 && (typeof data[0][attributeOrder]) === 'object' && data[0][attributeOrder]['date'] !== undefined) {
+                    data = _this.dateOrder(data, attributeOrder, typeOrder);
+                }
+                return data.slice(offset, offset + limit);
         })
             .catch(this.handleError);
     };
@@ -90,13 +93,43 @@ var CosmonautService = (function () {
      */
     CosmonautService.prototype.stringOrder = function (data, attribute, type) {
         data.sort(function (a, b) {
-            var x = a[attribute].toLowerCase();
-            var y = b[attribute].toLowerCase();
-            if (type.toUpperCase() == 'ASC') {
-                return x < y ? -1 : x > y ? 1 : 0;
+            if ((typeof a[attribute]) === 'string' && (typeof b[attribute]) === 'string') {
+                var x = a[attribute].toLowerCase();
+                var y = b[attribute].toLowerCase();
+                if (type.toUpperCase() == 'ASC') {
+                    return x < y ? -1 : x > y ? 1 : 0;
+                }
+                else {
+                    return x < y ? 1 : x > y ? -1 : 0;
+                }
             }
             else {
-                return x < y ? 1 : x > y ? -1 : 0;
+                return 0;
+            }
+        });
+        return data;
+    };
+    /**
+     * Sorting array by date. Date is separate to year, month, day. So we Sort first by year, than by month and day
+     * @param data Cosmonaut[]
+     * @param attribute string
+     * @param type string
+     * @returns {Cosmonaut[]}
+     */
+    CosmonautService.prototype.dateOrder = function (data, attribute, type) {
+        data.sort(function (a, b) {
+            if (data.length > 0 && a[attribute]['date'] !== undefined && b[attribute]['date'] !== undefined) {
+                var x = a[attribute]['date'];
+                var y = b[attribute]['date'];
+                if (type.toUpperCase() == 'ASC') {
+                    return x['year'] < y['year'] ? -1 : x['year'] > y['year'] ? 1 : (x['month'] < y['month'] ? -1 : x['month'] > y['month'] ? 1 : (x['day'] < y['day'] ? -1 : x['day'] > y['day'] ? 1 : (0)));
+                }
+                else {
+                    return x['year'] < y['year'] ? 1 : x['year'] > y['year'] ? -1 : (x['month'] < y['month'] ? 1 : x['month'] > y['month'] ? -1 : (x['day'] < y['day'] ? 1 : x['day'] > y['day'] ? -1 : (0)));
+                }
+            }
+            else {
+                return 0;
             }
         });
         return data;
@@ -113,7 +146,6 @@ var CosmonautService = (function () {
             .catch(this.handleError);
     };
     CosmonautService.prototype.handleError = function (error) {
-        console.error('An error occurred', error);
         return Promise.reject(error.message || error);
     };
     return CosmonautService;

@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild ,ElementRef} from '@angular/core';
+import { FlashMessagesService } from 'angular2-flash-messages';
 import { Cosmonaut } from './../cosmonaut';
 import { CosmonautService } from './../services/cosmonaut.service'
 
@@ -13,14 +14,17 @@ export class CosmonautsComponent implements OnInit {
     totalItems: number = 0;
     itemPerPage: number = 10;
     currentPage: number = 1;
-    orderName: string = 'name';
+    orderName:string = 'id';
     orderType: string = 'ASC';
 
-    constructor(private cosmonautService: CosmonautService) {  }
+    constructor(private cosmonautService:CosmonautService,
+                private flashMessagesService:FlashMessagesService) {
+    }
 
     ngOnInit(): void {
         this.cosmonautService.getCosmonauts()
-            .then(data => this.totalItems = data.length);
+            .then(data => this.totalItems = data.length)
+            .catch(e => console.log(e));
             this.loadCosmonauts();
     }
 
@@ -31,7 +35,11 @@ export class CosmonautsComponent implements OnInit {
         this.cosmonautService.getCosmonautsOrderLimit(this.orderName, this.orderType, (this.currentPage-1)*this.itemPerPage, this.itemPerPage)
             .then(data => {
                 this.cosmonauts = data;
-            });
+            })
+            .catch(e => this.flashMessagesService.show('Vyskytla se chyba při načítání kosmonautů. Chyba:(' + e._body.error + ')', {
+                cssClass: 'alert-danger',
+                timeout: 4000
+            }));
     }
 
     /**
@@ -44,7 +52,12 @@ export class CosmonautsComponent implements OnInit {
                 .then(() => {
                     this.loadCosmonauts();
                     this.totalItems--;
-                });
+                    this.flashMessagesService.show('Kosmonaut byl vymazán', {cssClass: 'alert-success', timeout: 2000});
+                })
+                .catch(e => this.flashMessagesService.show('Vyskytla se chyba při mazání kosmonauta. Chyba:(' + e._body.error + ')', {
+                    cssClass: 'alert-danger',
+                    timeout: 4000
+                }));
 
         }
     }
