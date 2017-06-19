@@ -24,9 +24,11 @@ var CosmonautsComponent = (function () {
     CosmonautsComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.cosmonautService.getCosmonauts()
-            .then(function (data) { return _this.totalItems = data.length; })
+            .then(function (data) {
+                _this.totalItems = data.length;
+                _this.loadCosmonauts();
+            })
             .catch(function (e) { return console.log(e); });
-        this.loadCosmonauts();
     };
     /**
      * Load apropriate cosmonauts by setted page

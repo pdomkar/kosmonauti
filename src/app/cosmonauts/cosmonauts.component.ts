@@ -23,9 +23,11 @@ export class CosmonautsComponent implements OnInit {
 
     ngOnInit(): void {
         this.cosmonautService.getCosmonauts()
-            .then(data => this.totalItems = data.length)
+            .then(data => {
+                this.totalItems = data.length;
+                this.loadCosmonauts();
+            })
             .catch(e => console.log(e));
-            this.loadCosmonauts();
     }
 
     /**
