@@ -10,3 +10,6 @@ a.active-link, a.active-link:hover
 	display: none !important;
 }
 
+.mydp .selectorarrow {
+  right: 0;
+}

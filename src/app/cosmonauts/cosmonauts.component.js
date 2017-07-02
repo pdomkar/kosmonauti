@@ -25,9 +25,9 @@ var CosmonautsComponent = (function () {
         var _this = this;
         this.cosmonautService.getCosmonauts()
             .then(function (data) {
-                _this.totalItems = data.length;
-                _this.loadCosmonauts();
-            })
+            _this.totalItems = data.length;
+            _this.loadCosmonauts();
+        })
             .catch(function (e) { return console.log(e); });
     };
     /**
