@@ -1,8 +1,8 @@
 # techfides_ukol
 
-git clone https://github.com/pdomkar/techfides_ukol.git
+git clone https://github.com/pdomkar/kosmonauti.git
 
-cd techfides_ukol/
+cd kosmonauti/
 
 npm install
 
