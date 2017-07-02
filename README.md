@@ -1,5 +1,4 @@
-# techfides_ukol
-
+# Kosmonauti
 git clone https://github.com/pdomkar/kosmonauti.git
 
 cd kosmonauti/
